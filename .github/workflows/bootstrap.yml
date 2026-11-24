@@ -1,0 +1,41 @@
+name: Bootstrap NOVA Media Center
+
+on:
+  push:
+    paths:
+      - "bootstrap/source.part*"
+      - ".github/workflows/bootstrap.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore application archive
+        shell: bash
+        run: |
+          if [ ! -d bootstrap ]; then
+            echo "Bootstrap archive already removed; nothing to do."
+            exit 0
+          fi
+
+          cat bootstrap/source.part00 bootstrap/source.part01 bootstrap/source.part02 bootstrap/source.part03 bootstrap/source.part04 > /tmp/gbtv.zip.b64
+          test "$(wc -c < /tmp/gbtv.zip.b64)" -eq 44660
+          base64 --decode /tmp/gbtv.zip.b64 > /tmp/gbtv.zip
+          unzip -t /tmp/gbtv.zip
+          unzip -o /tmp/gbtv.zip -d .
+
+          rm -rf bootstrap
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "feat: bootstrap NOVA Media Center v0.2.1"
+            git push
+          fi
