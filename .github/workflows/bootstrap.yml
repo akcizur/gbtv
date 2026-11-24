@@ -26,7 +26,7 @@ jobs:
             exit 0
           fi
 
-          cat bootstrap/source.part00 bootstrap/source.part01 bootstrap/source.part02 bootstrap/source.part02b bootstrap/source.part02c bootstrap/source.part02d bootstrap/source.part03 bootstrap/source.part04 > /tmp/gbtv.zip.b64
+          cat bootstrap/source.part00 bootstrap/source.part01 bootstrap/source.part02 bootstrap/source.part02b bootstrap/source.part02c bootstrap/source.part02d bootstrap/source.part03 bootstrap/source.part04a bootstrap/source.part04b bootstrap/source.part04c bootstrap/source.part04d bootstrap/source.part04e > /tmp/gbtv.zip.b64
           actual="$(wc -c < /tmp/gbtv.zip.b64 | tr -d ' ')"
           echo "Encoded archive size: $actual bytes"
           test "$actual" -eq 44660
