@@ -230,7 +230,7 @@ function App() {
       <div className="app-main-wrap">
         <Header page={page} openSearch={() => setSearchOpen(true)} navigate={navigate} />
         <main className={`main-content ${page === 'live' ? 'main-player' : ''}`} ref={mainRef}>
-          {page === 'home' && <HomePage onPlay={() => showDetail(movies[0])} onSelect={showDetail} onNavigate={navigate} channels={channelList} onChooseChannel={openPlayer} favorites={favorites} toggleFavorite={toggleFavorite} />}
+          {page === 'home' && <HomePage onSelect={showDetail} onNavigate={navigate} channels={channelList} onChooseChannel={openPlayer} favorites={favorites} toggleFavorite={toggleFavorite} />}
           {page === 'live' && <LivePage channel={activeChannel} channels={channelList} quality={settings.quality} onPlayerError={notify} onFeatureUnavailable={notify} playing={playing} setPlaying={setPlaying} muted={muted} setMuted={setMuted} volume={volume} setVolume={setVolume} showOSD={showOSD} setShowOSD={setShowOSD} resetOSDTimer={resetOSDTimer} moveChannel={moveChannel} onChannels={() => document.querySelector('.player-lower')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })} />}
           {page === 'guide' && <GuidePage activeChannel={activeChannel} channels={channelList} epg={epgList} clock={clock} onChoose={openPlayer} />}
           {page === 'movies' && <CatalogPage title="Filmy" subtitle="Příběhy, které stojí za váš čas." items={movies.filter(item => item.type !== 'Seriál')} onSelect={showDetail} favorites={favorites} toggleFavorite={toggleFavorite} />}
@@ -308,7 +308,7 @@ function Header({ page, openSearch, navigate }: { page: Page; openSearch: () => 
   )
 }
 
-function HomePage({ onPlay, onSelect, onNavigate, channels: channelItems, onChooseChannel, favorites, toggleFavorite }: { onPlay: () => void; onSelect: (item: MediaItem) => void; onNavigate: (page: Page) => void; channels: Channel[]; onChooseChannel: (channel: Channel) => void; favorites: string[]; toggleFavorite: (id: string) => void }) {
+function HomePage({ onSelect, onNavigate, channels: channelItems, onChooseChannel, favorites, toggleFavorite }: { onSelect: (item: MediaItem) => void; onNavigate: (page: Page) => void; channels: Channel[]; onChooseChannel: (channel: Channel) => void; favorites: string[]; toggleFavorite: (id: string) => void }) {
   const featured = movies[0]
   return (
     <div className="page-stack home-page">
